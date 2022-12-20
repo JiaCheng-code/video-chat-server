@@ -59,5 +59,14 @@ io.on('connection', (socket) => {
             activeUsers:peers
         })
     })
+    // 监听客户端发送过来的预呼叫并获取data
+    socket.on('pre-offer',(data)=>{
+        console.log(data)
+        // 向应答的发送data数据
+        io.to(data.callee.socketId).emit('pre-offer',{
+            callerUsername:data.caller.username,
+            callerSocketId: socket.id
+        })
+    })
 
 })
